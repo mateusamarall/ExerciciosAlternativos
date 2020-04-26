@@ -12,6 +12,9 @@ import javax.swing.JOptionPane;
  * @author Manuel
  */
 public class TelaExamesMedicos extends javax.swing.JFrame {
+    LinkedList listidoso = new LinkedList();
+    LinkedList listcrianca = new LinkedList();
+    LinkedList listadulto = new LinkedList();
     LinkedList list = new LinkedList();
 
     /**
@@ -162,22 +165,39 @@ public class TelaExamesMedicos extends javax.swing.JFrame {
         else{
             Candidato can = new Candidato(txtnome.getText(), txtsexo.getText(),Integer.parseInt(txtidade.getText()));
         
-            if(list.peekFirst()==null){
-                list.addFirst(can);
+            if(can.getIdade()>=60){
+                if(listidoso.isEmpty()){
+                    listidoso.addFirst(can);
+                }else{
+                    listidoso.addLast(can);
+                }
+                JOptionPane.showMessageDialog(null, "idoso encaminhado para a fila  ");
+        }
+        else if(can.getIdade()<18){
+            if(listcrianca.isEmpty()){
+                listcrianca.addFirst(can);
+            }
+            else{
+                listcrianca.addLast(can);
+            }
+            JOptionPane.showMessageDialog(null, "criança encaminhada para a fila");
         }
         else{
-            list.addLast(can);
+            if(listadulto.isEmpty()){
+                listadulto.addFirst(can);
+            } 
+            else{
+                listadulto.addLast(can);
+            }
+            JOptionPane.showMessageDialog(null, "adulto encaminhado para a fila");
         }
-            JOptionPane.showMessageDialog(null, "Candidato Registrado");
         }
-       
     }//GEN-LAST:event_registrarfilaActionPerformed
-
     private void chamar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chamar1ActionPerformed
         // TODO add your handling code here:
-        if(!(list.isEmpty())){
+        if(!listidoso.isEmpty()){
             
-            Object[] todoscandidatos = list.toArray();
+            Object[] todoscandidatos = listidoso.toArray();
             for(int i=0; i<todoscandidatos.length; i++){
                 if(todoscandidatos[i] instanceof Candidato ){
                     Candidato can = (Candidato) todoscandidatos[i];
@@ -188,16 +208,16 @@ public class TelaExamesMedicos extends javax.swing.JFrame {
                     
                 }
             }
-       }else{
+       }
+        else{
             JOptionPane.showMessageDialog(null, "A fila de idoso esta vazia");
         }
     }//GEN-LAST:event_chamar1ActionPerformed
-
     private void chamar4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chamar4ActionPerformed
         // TODO add your handling code here:
-        if(!(list.isEmpty())){
+        if(!listcrianca.isEmpty()){
             
-            Object[] todoscandidatos = list.toArray();
+            Object[] todoscandidatos = listcrianca.toArray();
             for(int i=0; i<todoscandidatos.length; i++){
                 if(todoscandidatos[i] instanceof Candidato ){
                     Candidato can = (Candidato) todoscandidatos[i];
@@ -208,16 +228,17 @@ public class TelaExamesMedicos extends javax.swing.JFrame {
                     
                 }
             }
-       }else{
+       }
+        else{
             JOptionPane.showMessageDialog(null, "A fila de criança esta vazia");
         }
     }//GEN-LAST:event_chamar4ActionPerformed
 
     private void chamar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chamar2ActionPerformed
         // TODO add your handling code here:
-         if(!(list.isEmpty())){
+        if(!(listadulto.isEmpty())){
             
-            Object[] todoscandidatos = list.toArray();
+            Object[] todoscandidatos = listadulto.toArray();
             for(int i=0; i<todoscandidatos.length; i++){
                 if(todoscandidatos[i] instanceof Candidato ){
                     Candidato can = (Candidato) todoscandidatos[i];
@@ -228,21 +249,43 @@ public class TelaExamesMedicos extends javax.swing.JFrame {
                     
                 }
             }
-       }else{
+       }
+        else{
             JOptionPane.showMessageDialog(null, "A fila de adulto esta vazia");
         }
     }//GEN-LAST:event_chamar2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Object[] todoscandidatos = list.toArray();
-        for(int i=0; i<todoscandidatos.length; i++){
-            if(todoscandidatos[i] instanceof Candidato){
-                Candidato can = (Candidato) todoscandidatos[i];
-                //adicionar logica de atender
-            }
+     if(!listidoso.isEmpty()){
+            Candidato can = (Candidato) listidoso.removeFirst();
+            JOptionPane.showMessageDialog(null, "Idoso atendido. dados: " + can.toString());
         }
-       
+        else if(listadulto.isEmpty() && listcrianca.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Não há ninguém na fila !");
+        }
+        else if(listadulto.isEmpty() && !listcrianca.isEmpty()){
+            Candidato can = (Candidato) listcrianca.removeFirst();
+            
+            JOptionPane.showMessageDialog(null, "Criança atendida. dados: "+ can.toString());
+        }
+        else if(!listadulto.isEmpty() && listcrianca.isEmpty()){
+            Candidato can = (Candidato) listadulto.removeFirst();
+            
+            JOptionPane.showMessageDialog(null, "Adulto atendido. dados: "+ can.toString());
+        }
+        else{
+            if(!listadulto.isEmpty()){
+                Candidato can = (Candidato) listadulto.removeFirst();
+                JOptionPane.showMessageDialog(null, "Adulto atendido: "+ can.toString());
+               
+            }
+            else{
+                Candidato can = (Candidato) listcrianca.removeFirst();
+                JOptionPane.showMessageDialog(null, "Criança atendida: "+ can.toString());
+                
+            }
+    } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
