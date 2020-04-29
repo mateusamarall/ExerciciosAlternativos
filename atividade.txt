@@ -1,0 +1,42 @@
+/*1*/
+select nome_autor, cpf_autor, endereco from Autor where nacionalidade='BR';
+
+/*2*/
+SELECT matricula, nome_autor, dt_nascimento from Autor where matricula BETWEEN 100 and 200 and nacionalidade <>'BR';
+/*3*/
+select * from livro where cod_editora = 11 or cod_editora = 13 or cod_editora =15;
+/*4*/
+select * from assunto where descricao LIKE 'sistema%' or descricao LIKE 'software%';
+/*5*/
+select * from editora where nome_editora LIKE'S%';
+/*6*/
+select * from editora group by price;
+/*7*/
+select AVG(preco) from editora;
+/*8*/
+select * from autor where nome LIKE'João%' nome LIKE 'Ana%';
+/*9*/
+SELECT count(matricula) from autor;
+/*10*/
+select MAX(preco) from editora;
+/*11*/
+select * from autor where nacionalidade>(
+select nacionalidade from autor
+where nome ='Pedro Alcântara'
+);
+
+/*12*/
+select * from autor where nacionalidade >(
+
+select nacionalidade from autor 
+where codigo = 2754 
+);
+
+/*13*/
+/* RESPOSTA LETRA C: nomes contendo "a" como segunda letra*/
+
+/*14*/
+/*RESPOSTA LETRA B: SUBSTR*/
+
+/*15*/
+/*RESPOSTA LETRA E*/
